@@ -1,0 +1,33 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6a2075c3.css",
+    "main.js": "/static/js/main.316af39f.js",
+    "static/media/img4.png": "/static/media/img4.a3fe9190f132c98f7c47.png",
+    "static/media/img3.png": "/static/media/img3.3d3547c2d8763dabf1ea.png",
+    "static/media/img5.png": "/static/media/img5.7ad01a6cd532c728669e.png",
+    "static/media/logo.png": "/static/media/logo.6427e52acf6d8cef5ee8.png",
+    "static/media/img1.png": "/static/media/img1.e5d50051a9fde44aef50.png",
+    "static/media/img2.png": "/static/media/img2.f67cc6f7239ce1c56a13.png",
+    "static/media/img7.png": "/static/media/img7.6fb87fc16f07517e1feb.png",
+    "static/media/allpickles.png": "/static/media/allpickles.5b70f371187b00046fab.png",
+    "static/media/img8.png": "/static/media/img8.57825bfe9af1eaf3e36e.png",
+    "static/media/page-404.jpg": "/static/media/page-404.6159dc964184d721151b.jpg",
+    "static/media/img6.png": "/static/media/img6.4bc6447b210873baf294.png",
+    "static/media/singlepickle.png": "/static/media/singlepickle.e6a4a395869e5982529b.png",
+    "static/media/app-store.jpg": "/static/media/app-store.ef349165dfaf884573a5.jpg",
+    "static/media/google-play.jpg": "/static/media/google-play.2a527ac3efc1ecb12a2d.jpg",
+    "static/media/bg.png": "/static/media/bg.56479838083707e4ffd6.png",
+    "static/media/loading.gif": "/static/media/loading.6e1d23c8f091c90f596a.gif",
+    "static/media/payment-method.png": "/static/media/payment-method.47ad3e696f50516da1b3.png",
+    "static/media/icon-user.svg": "/static/media/icon-user.abd84f71578227606591b08755e49d51.svg",
+    "static/media/icon-cart.svg": "/static/media/icon-cart.6fbcc20d25e292c25d52a0fddd4d1ae1.svg",
+    "index.html": "/index.html",
+    "static/media/search.svg": "/static/media/search.44144c63f1114bd734334869ead5c143.svg",
+    "main.6a2075c3.css.map": "/static/css/main.6a2075c3.css.map",
+    "main.316af39f.js.map": "/static/js/main.316af39f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6a2075c3.css",
+    "static/js/main.316af39f.js"
+  ]
+}

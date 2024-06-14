@@ -1,0 +1,69 @@
+.container {
+    width: 100%;
+    height: auto;
+    padding: 10px 0px;
+  }
+  .aboutWrapper table thead {
+    background: #f1f1f1;
+    overflow: hidden;
+  }
+  .aboutWrapper table thead th:first-child {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
+  .aboutWrapper table thead th:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  
+  .aboutWrapper table tbody td {
+    vertical-align: middle;
+  }
+  .aboutWrapper table tbody td .img {
+    width: 30%;
+    height: 150px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  .aboutWrapper table tbody td .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .aboutWrapper table tbody td .info {
+    width: 70%;
+  }
+  .aboutWrapper table tbody td .info a {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .aboutWrapper table tbody td .info a:hover {
+    text-decoration: none;
+  }
+  
+  .aboutWrapper table tbody td span {
+    font-weight: 600;
+    font-size: 28px;
+  }
+  .aboutWrapper table tbody td span.text-g {
+    font-weight: bold;
+  }
+  
+  .aboutRightBox {
+    padding-left: 100px;
+  }
+  .aboutRightBox .card {
+    position: sticky;
+    top: 150px;
+  }
+  .about-innercontainer{ width: 100%;
+    margin-left: 0px;
+    background: #f1f2ed;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: auto;
+    width: 80%;
+    text-align: justify;
+}   
+.about-topcontainer{
+    margin-top: 500px;
+}
