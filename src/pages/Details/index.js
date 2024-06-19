@@ -10,6 +10,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useEffect } from "react";
 import { Button } from "@mui/material";
+import { useUser } from "../../context/userContext";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
@@ -33,10 +34,12 @@ const DetailsPage = (props) => {
   const [activeTabs, setActiveTabs] = useState(0);
 
   const [currentProduct, setCurrentProduct] = useState({});
+  const [currentPrice, setCurrentprice] =  useState("");
   const [isAdded, setIsadded] = useState(false);
 
   const context = useContext(MyContext);
-
+  const {userData, dispatchUserData } = useUser();
+  const { cart } = userData;
   const [prodCat, setProdCat] = useState({
     parentCat: sessionStorage.getItem("parentCat"),
     subCatName: sessionStorage.getItem("subCatName"),
@@ -100,6 +103,8 @@ const DetailsPage = (props) => {
 
   const isActive = (index) => {
     setActiveSize(index);
+    setCurrentprice(currentProduct.priceDistribution[index])
+    setIsadded(false);
   };
 
   const plus = () => {
@@ -112,6 +117,7 @@ const DetailsPage = (props) => {
     }
   };
 
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -123,6 +129,7 @@ const DetailsPage = (props) => {
               item_.products.map((product) => {
                 if (parseInt(product.id) === parseInt(id)) {
                   setCurrentProduct(product);
+                  setCurrentprice(product.priceDistribution[0])
                 }
               });
           });
@@ -218,9 +225,26 @@ const DetailsPage = (props) => {
     }
   };
 
-  const addToCart = (item) => {
-    context.addToCart(item);
-    setIsadded(true);
+  const addToCart = (currentProduct) => {
+    // context.addToCart(item);
+  
+    console.log("activeSize",activeSize)
+    currentProduct = {...currentProduct , selectedPrice : currentProduct.priceDistribution[activeSize] , selectedWt : currentProduct.weight[activeSize]}
+    let flag = 0;
+    console.log("currentProduct",currentProduct)
+    console.log("cart",cart)
+    cart.length !=0 && cart.forEach(el => {
+      if(el.id === currentProduct.id && el.selectedWt == currentProduct.selectedWt){
+        flag =1;
+        dispatchUserData({ type: "INCREMENT_QUANTITY", payload : currentProduct });
+      }      
+    })
+  
+    if(!flag){
+      dispatchUserData({ type: "ADD_TO_CART", payload: currentProduct });}
+
+      setIsadded(true);
+
   };
 
   const getCartData = async (url) => {
@@ -242,11 +266,11 @@ const DetailsPage = (props) => {
     <>
       {context.windowWidth < 992 && (
         <Button
-          className={`btn-g btn-lg w-100 filterBtn {isAlreadyAddedInCart===true && 'no-click'}`}
+          className={`btn-g btn-lg w-100 filterBtn ${isAlreadyAddedInCart===true && 'no-click'}`}
           onClick={() => addToCart(currentProduct)}
         >
           <ShoppingCartOutlinedIcon />
-          {isAdded === true || isAlreadyAddedInCart === true
+          {isAdded === true 
             ? "Added"
             : "Add To Cart"}
         </Button>
@@ -352,7 +376,7 @@ const DetailsPage = (props) => {
 
               <div className="priceSec d-flex align-items-center mb-3">
                 <span className="text-g priceLarge">
-                  Rs {currentProduct.price}
+                  Rs {currentPrice}
                 </span>
                 {/* <div className="ml-3 d-flex flex-column">
                   <span className="text-org">
@@ -369,7 +393,7 @@ const DetailsPage = (props) => {
               {currentProduct.weight !== undefined &&
                 currentProduct.weight.length !== 0 && (
                   <div className="productSize d-flex align-items-center">
-                    <span>Size / Weight:</span>
+                    <span> Weight: </span>
                     <ul className="list list-inline mb-0 pl-4">
                       {currentProduct.weight.map((item, index) => {
                         return (
@@ -387,7 +411,7 @@ const DetailsPage = (props) => {
                   </div>
                 )}
 
-              {currentProduct.Wt !== undefined &&
+              {/* {currentProduct.Wt !== undefined &&
                 currentProduct.Wt.length !== 0 && (
                   <div className="productSize d-flex align-items-center">
                     <span>Weight:</span>
@@ -406,9 +430,9 @@ const DetailsPage = (props) => {
                       })}
                     </ul>
                   </div>
-                )}
+                )} */}
 
-              {currentProduct.SIZE !== undefined &&
+              {/* {currentProduct.SIZE !== undefined &&
                 currentProduct.SIZE.length !== 0 && (
                   <div className="productSize d-flex align-items-center">
                     <span>SIZE:</span>
@@ -427,7 +451,7 @@ const DetailsPage = (props) => {
                       })}
                     </ul>
                   </div>
-                )}
+                )} */}
 
               <div className="d-flex align-items-center">
                 <div className="d-flex align-items-center">
@@ -437,7 +461,7 @@ const DetailsPage = (props) => {
                       onClick={() => addToCart(currentProduct)}
                     >
                       <ShoppingCartOutlinedIcon />
-                      {isAdded === true || isAlreadyAddedInCart === true
+                      {isAdded === true 
                         ? "Added"
                         : "Add To Cart"}
                     </Button>

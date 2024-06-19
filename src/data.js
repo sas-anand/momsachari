@@ -10,11 +10,13 @@ const data = {
             {
               productName: "Amla Murabba",
               price: "499.00",
-              defaultWeight: "",
-              Wt: [250, 500],
+              defaultWeight: "250",
+              weight: [250, 500, 750],
+              priceDistribution: ["499.00","650.00","850.00"],
               catImg: "https://dl.dropboxusercontent.com/scl/fi/28pbtxir9dkzs0r8k0q9y/amla_muraba.jpeg?rlkey=z6p8iuhic65td41oxkcyvx3df&st=ff2jq82e&dl=0",
               discount: "",
               defaultWt: "500 gm",
+
               productImages: [
                 "https://dl.dropboxusercontent.com/scl/fi/28pbtxir9dkzs0r8k0q9y/amla_muraba.jpeg?rlkey=z6p8iuhic65td41oxkcyvx3df&st=ff2jq82e&dl=0",
               
@@ -27,13 +29,19 @@ const data = {
             {
               productName: "Lal Mirch Bharua | Stuffed Red Chilli Pickles",
               price: "499.00",
-              defaultWeight: "",
-              weight: [250, 500],
+              defaultWeight: "250",
+              weight: [250, 500, 750],
+              priceDistribution: ["499.00","650.00","850.00"],
               RAM: [4, 6, 8, 12],
               catImg:
                 "https://dl.dropboxusercontent.com//scl/fi/wyiyanfmu3nlsa6p5eg4c/lalMirchiBharua.jpeg?rlkey=bde17pd3ckjpkqqsnloams6z7&st=9irx6z8a&dl=0",
               discount: "",
               brand: "",
+              wtAndPriceDistribution : {
+                250 : "499.00",
+                500 : "650.00",
+                750 : "850,00"
+              },
               productImages: [
                 "https://dl.dropboxusercontent.com//scl/fi/wyiyanfmu3nlsa6p5eg4c/lalMirchiBharua.jpeg?rlkey=bde17pd3ckjpkqqsnloams6z7&st=9irx6z8a&dl=0",
               ],
@@ -45,9 +53,15 @@ const data = {
             {
               productName: "Amla Pickle",
               price: "499.00",
-              defaultWeight: "",
-              weight: [250, 500],
+              defaultWeight: "250",
+              weight: [250, 500, 750],
+              priceDistribution: ["499.00","650.00","850.00"],
               RAM: [4, 6, 8, 12],
+              wtAndPriceDistribution : {
+                250 : "499.00",
+                500 : "650.00",
+                750 : "850,00"
+              },
               catImg:
                 "https://dl.dropboxusercontent.com/scl/fi/yshttjnhrcbztv62jwhy6/amlaPickle.jpeg?rlkey=vep1v6vb08zch7iddkojv34hk&st=pzx2m7en&dl=0",
               discount: "",
@@ -64,9 +78,15 @@ const data = {
               productName:
                 "Lemon Pickle",
               price: "499.00",
-              defaultWeight: "500 grams",
-              weight: [250, 500],
+              defaultWeight: "250",
+              weight: [250, 500, 750],
+              priceDistribution: ["499.00","650.00","850.00"],
               RAM: [4, 6, 8, 12],
+              wtAndPriceDistribution : {
+                250 : "499.00",
+                500 : "650.00",
+                750 : "850,00"
+              },
               catImg:
                 "https://dl.dropboxusercontent.com//scl/fi/sluvxdg5v6go4dg9jzxtx/lemonPickle.jpeg?rlkey=v6ruee4be91v6ml2633but05b&st=816ygvsg&dl=0",
               discount: "",
@@ -83,9 +103,15 @@ const data = {
               productName:
                 "Mango Pickle",
               price: "499.00",
-              defaultWeight: "",
-              weight: [250, 500],
+              defaultWeight: "250",
+              weight: [250, 500, 750],
+              priceDistribution: ["499.00","650.00","850.00"],
               RAM: [4, 6, 8, 12],
+              wtAndPriceDistribution : {
+                250 : "499.00",
+                500 : "650.00",
+                750 : "850,00"
+              },
               catImg:
                 "https://dl.dropboxusercontent.com//scl/fi/vfvykpq5b9liemarfr967/MangoPickle.jpeg?rlkey=6cdwqueahyf7dsqcv0qywew34&st=harqvr9m&dl=0",
               discount: "",

@@ -8,66 +8,91 @@ import QuantityBox from "../../components/quantityBox";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { MyContext } from "../../App";
 import axios from "axios";
-
+import { useUser } from "../../context/userContext";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [paymentTextState,setPaymentTextState] = useState("");
   const context = useContext(MyContext);
   const history = useNavigate();
+  const { userData, dispatchUserData } = useUser();
+  const { cart } = userData;
+  console.log("cart printed",cart)
+
+  const clearCart = (item) => {
+    dispatchUserData({ type: "CLEAR_CART" });
+  };
+
+  const removeItemFromCart = (item) => {
+    dispatchUserData({ type: "REMOVE_FROM_CART", payload : item });
+  };
+
+  const incrementQuantity = (item) => {
+    dispatchUserData({ type: "INCREMENT_QUANTITY", payload : item });
+  };
+
+  const decrementQuantity = (item) => {
+    if(item.qty > 1)
+      dispatchUserData({ type: "DECREMENT_QUANTITY", payload : item });
+  };
+
+
 
   useEffect(() => {
-    if (context.isLogin === "true") {
-      getCartData("http://localhost:5000/cartItems");
-    } else {
-      history("/");
-    }
+    // if (context.isLogin === "true") {
+    //   getCartData("http://localhost:5000/cartItems");
+    // } else {
+    //   history("/");
+    // }
 
     window.scrollTo(0, 0);
   }, []);
 
-  const getCartData = async (url) => {
-    try {
-      await axios.get(url).then((response) => {
-        setCartItems(response.data);
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  // const getCartData = async (url) => {
+  //   try {
+  //     await axios.get(url).then((response) => {
+  //       setCartItems(response.data);
+  //     });
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
-  const deleteItem = async (id) => {
-    const response = await axios.delete(
-      `http://localhost:5000/cartItems/${id}`,
-    );
-    if (response !== null) {
-      getCartData("http://localhost:5000/cartItems");
-      context.removeItemsFromCart(id);
-    }
-  };
+  // const deleteItem = async (id) => {
+  //   const response = await axios.delete(
+  //     `http://localhost:5000/cartItems/${id}`,
+  //   );
+  //   if (response !== null) {
+  //     getCartData("http://localhost:5000/cartItems");
+  //     context.removeItemsFromCart(id);
+  //   }
+  // };
 
-  const emptyCart = () => {
-    let response = null;
-    cartItems.length !== 0 &&
-      cartItems.map((item) => {
-        response = axios.delete(
-          `http://localhost:5000/cartItems/${parseInt(item.id)}`,
-        );
-      });
-    if (response !== null) {
-      getCartData("http://localhost:5000/cartItems");
-    }
+  // const emptyCart = () => {
+  //   let response = null;
+  //   cartItems.length !== 0 &&
+  //     cartItems.map((item) => {
+  //       response = axios.delete(
+  //         `http://localhost:5000/cartItems/${parseInt(item.id)}`,
+  //       );
+  //     });
+  //   if (response !== null) {
+  //     getCartData("http://localhost:5000/cartItems");
+  //   }
 
-    context.emptyCart();
-  };
+  //   context.emptyCart();
+  // };
 
-  const updateCart = (items) => {
-    setCartItems(items);
-  };
+  // const updateCart = (items) => {
+  //   setCartItems(items);
+  // };
 
   return (
     <>
-      {context.windowWidth > 992 && (
+      {/* {context.windowWidth > 992 && (
         <div className="breadcrumbWrapper mb-4">
           <div className="container-fluid">
             <ul className="breadcrumb breadcrumb2 mb-0">
@@ -79,30 +104,35 @@ const Cart = () => {
             </ul>
           </div>
         </div>
-      )}
+      )} */}
 
       <section className="cartSection mb-5">
-        <div className="container-fluid">
+        <div className={`container-fluid ${cart.length == 0 && "d-flex align-items-center justify-center"}`}>
           <div className="row">
             <div className="col-md-8">
               <div className="d-flex align-items-center w-100">
                 <div className="left">
-                  <h1 className="hd mb-0">Your Cart</h1>
-                  <p>
-                    There are <span className="text-g">3</span> products in your
+                  {cart.length != 0 && <h1 className="hd mb-0">Your Cart</h1>}
+                  {
+                    cart.length != 0 ? 
+                   ( <p>
+                    There {cart.length > 1 ? 'are' : 'is'} <span className="text-g">{cart.length}</span> {cart.length > 1 ? 'products' : 'product'} in your
                     cart
-                  </p>
+                  </p>) :
+                    <nobr className="font-weight-bold text-3xl">Your cart is empty !!</nobr>
+                  }
+                 
                 </div>
-
-                <span
+{
+           cart.length !=0 &&     <span
                   className="ml-auto clearCart d-flex align-items-center cursor "
-                  onClick={() => emptyCart()}
+                  onClick={clearCart}
                 >
                   <DeleteOutlineOutlinedIcon /> Clear Cart
-                </span>
+                </span>}
               </div>
 
-              <div className="cartWrapper mt-4">
+             {cart.length  !=0 &&  <div className="cartWrapper mt-4">
                 <div className="table-responsive">
                   <table className="table">
                     <thead>
@@ -116,8 +146,8 @@ const Cart = () => {
                     </thead>
 
                     <tbody>
-                      {cartItems.length !== 0 &&
-                        cartItems.map((item, index) => {
+                      {cart.length !== 0 &&
+                        cart.map((item, index) => {
                           return (
                             <tr>
                               <td width={"50%"}>
@@ -146,37 +176,57 @@ const Cart = () => {
                                     <span className="text-light">
                                       ({parseFloat(item.rating)})
                                     </span>
+                                    <div>{parseInt(item.selectedWt)} grams</div>
                                   </div>
                                 </div>
                               </td>
 
                               <td width="20%">
                                 <span>
-                                  Rs: {parseInt(item.price.split(",").join(""))}
+                                  Rs: {item.selectedPrice}
                                 </span>
                               </td>
 
                               <td>
-                                <QuantityBox
+                                {/* <QuantityBox
                                   item={item}
-                                  cartItems={cartItems}
+                                  cartItems={cart}
                                   index={index}
-                                  updateCart={updateCart}
-                                />
+                                /> */}
+                                <div className="addCartSection pt-4 pb-4 d-flex align-items-center ">
+      <div className="counterSec mr-3">
+        <input type="number" value={item?.qty} />
+        <span
+          className="arrow plus"
+          onClick={() => incrementQuantity(item) }
+        >
+          <KeyboardArrowUpIcon />
+        </span>
+
+        <span
+          className="arrow minus"
+          onClick={() => {
+            decrementQuantity(item)
+          }}
+        >
+          <KeyboardArrowDownIcon />
+        </span>
+      </div>
+    </div>
                               </td>
 
                               <td>
                                 <span className="text-g">
                                   Rs.{" "}
                                   {parseInt(item.price.split(",").join("")) *
-                                    parseInt(item.quantity)}
+                                    parseInt(item.qty)}
                                 </span>
                               </td>
 
                               <td align="center">
                                 <span
                                   className="cursor"
-                                  onClick={() => deleteItem(item.id)}
+                                  onClick={() => removeItemFromCart(item)}
                                 >
                                   <DeleteOutlineOutlinedIcon />
                                 </span>
@@ -187,14 +237,14 @@ const Cart = () => {
                     </tbody>
                   </table>
                 </div>
-              </div>
+              </div> }
 
               <br />
 
               <div className="d-flex align-items-center">
                 <Link to="/">
                   <Button className="btn-g">
-                    <KeyboardBackspaceIcon /> Continue Shopping
+                    <KeyboardBackspaceIcon /> <nobr>Continue Shopping</nobr>
                   </Button>
                 </Link>
                 {/* <Button className='btn-g ml-auto' onClick={updateCartData}>
@@ -202,18 +252,18 @@ const Cart = () => {
               </div>
             </div>
 
-            <div className="col-md-4 cartRightBox">
+           { cart.length  !=0 && <div className="col-md-4 cartRightBox">
               <div className="card p-4 ">
                 <div className="d-flex align-items-center mb-4">
                   <h5 className="mb-0 text-light">Subtotal</h5>
                   <h3 className="ml-auto mb-0 font-weight-bold">
                     <span className="text-g">
-                      {cartItems.length !== 0 &&
-                        cartItems
+                     Rs {cart.length !== 0 &&
+                        cart
                           .map(
                             (item) =>
                               parseInt(item.price.split(",").join("")) *
-                              item.quantity,
+                              item.qty,
                           )
                           .reduce((total, value) => total + value, 0)}
                     </span>
@@ -230,7 +280,7 @@ const Cart = () => {
                 <div className="d-flex align-items-center mb-4">
                   <h5 className="mb-0 text-light">Estimate for</h5>
                   <h3 className="ml-auto mb-0 font-weight-bold">
-                    United Kingdom
+                    India
                   </h3>
                 </div>
 
@@ -238,12 +288,12 @@ const Cart = () => {
                   <h5 className="mb-0 text-light">Total</h5>
                   <h3 className="ml-auto mb-0 font-weight-bold">
                     <span className="text-g">
-                      {cartItems.length !== 0 &&
-                        cartItems
+                     Rs {cart.length !== 0 &&
+                        cart
                           .map(
                             (item) =>
                               parseInt(item.price.split(",").join("")) *
-                              item.quantity,
+                              item.qty,
                           )
                           .reduce((total, value) => total + value, 0)}
                     </span>
@@ -251,9 +301,12 @@ const Cart = () => {
                 </div>
 
                 <br />
-                <Button className="btn-g btn-lg">Proceed To CheckOut</Button>
+                <Button className="btn-g btn-lg" onClick={() => {
+                setPaymentTextState("We Are Coming Soon !!")
+                }}>Proceed To CheckOut</Button>
+                <div className="d-flex align-items-center justify-center font-weight-bold m-2 toggle-color text-3xl">{paymentTextState}</div>
               </div>
-            </div>
+            </div> }
           </div>
         </div>
       </section>

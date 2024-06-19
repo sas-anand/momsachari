@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "./style.css";
 import Rating from "@mui/material/Rating";
 import allPickles from "../../assets/images/allpickles.png";
 import singlePickle from "../../assets/images/singlepickle.png";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
 
+import { useUser } from "../../context/userContext";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import CompareArrowsOutlinedIcon from "@mui/icons-material/CompareArrowsOutlined";
@@ -16,9 +17,11 @@ import { MyContext } from "../../App";
 const Product = (props) => {
   const [productData, setProductData] = useState();
   const [isAdded, setIsadded] = useState(false);
-
+  const {userData, dispatchUserData } = useUser();
+  const { cart } = userData;
+  const navigate = useNavigate();
   const context = useContext(MyContext);
-
+  // console.log("singel product page", props)
   useEffect(() => {
     setProductData(props.item);
   }, [props.item]);
@@ -27,12 +30,23 @@ const Product = (props) => {
     sessionStorage.setItem("parentCat", productData.parentCatName);
     sessionStorage.setItem("subCatName", productData.subCatName);
   };
-
+  
   const addToCart = (item) => {
-    context.addToCart(item);
+    item = {...item , selectedPrice : item.priceDistribution[0] , selectedWt : item.weight[0]}
+    let flag = 0;
+ 
+    cart.length !=0 && cart.forEach(el => {
+      if(el.id === item.id && el.selectedWt == item.selectedWt){
+        flag =1;
+        dispatchUserData({ type: "INCREMENT_QUANTITY", payload : item });
+      }      
+    })
+  
+    if(!flag){
+      dispatchUserData({ type: "ADD_TO_CART", payload: item });}
     setIsadded(true);
   };
-console.log("productData",productData)
+
   return (
     <div className="productThumb" onClick={setProductCat}>
       {props.tag !== null && props.tag !== undefined && (
@@ -78,12 +92,18 @@ console.log("productData",productData)
             <h4 className="title text-teal-950">
               <Link>{productData.productName.substr(0, 50) + "..."}</Link>
             </h4>
+            <div className="d-flex align-items-center justify-between">
             <Rating
               name="half-rating-read"
               value={parseFloat(productData.rating)}
               precision={0.5}
               readOnly
             />
+            <div>
+              <span className="text-teal-900 font-weight-bold">{productData?.weight[0]} grams</span>
+            </div>
+            </div>
+            
             {/* <span className="brand d-block text-g">
               <Link className="text-g">{productData.brand}</Link>
             </span> */}
@@ -91,7 +111,7 @@ console.log("productData",productData)
             <div className="d-flex align-items-center mt-3">
               <div className="d-flex align-items-center w-100">
                 <span className="price text-g font-weight-bold">
-                  Rs {productData.price}
+                  Rs {productData?.priceDistribution[0]}
                 </span>{" "}
                 {/* <span className="ml-auto">
                   {productData.defaultWeight}

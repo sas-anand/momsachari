@@ -129,7 +129,7 @@ const Header = (props) => {
                 <div className="d-flex align-items-center">
                   <ul className="list list-inline">
                     <li className="list-inline-item text-2xl px-1.5">
-                      <Link to="https://www.facebook.com/profile.php?id=61555575825393&mibextid=LQQJ4d" className="text-teal-950">
+                      <Link to="https://www.facebook.com/profile.php?id=61555575825393&mibextid=LQQJ4d" className="text-teal-950" target="_blank">
                         <FacebookOutlinedIcon style={{ fontSize: 30 }} />
                       </Link>
                     </li>
@@ -139,7 +139,7 @@ const Header = (props) => {
                       </Link>
                     </li>
                     <li className="list-inline-item px-1.5">
-                      <Link to="https://www.instagram.com/momsachari?igsh=MWx2djVxeHo1cnVy" className="text-teal-950">
+                      <Link to="https://www.instagram.com/momsachari?igsh=MWx2djVxeHo1cnVy" className="text-teal-950" target="_blank">
                         <InstagramIcon style={{ fontSize: 30 }} />
                       </Link>
                     </li>

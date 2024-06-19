@@ -64,3 +64,20 @@
   position: sticky;
   top: 150px;
 }
+.cartSection .row{
+  margin-top: 180px;
+}
+
+.toggle-color {
+
+  animation: colorChange 0.5s infinite alternate;
+}
+
+@keyframes colorChange {
+  0% {
+    color: rgb(181, 181, 181);
+  }
+  100% {
+    color: rgb(9, 110, 31);
+  }
+}

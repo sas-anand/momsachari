@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./responsive.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { UserProvider } from "./context/userContext";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./pages/Home/index";
@@ -131,6 +131,7 @@ function App() {
     data.productData.length !== 0 && (
       <BrowserRouter>
         <MyContext.Provider value={value}>
+        <UserProvider>
           {/* {
           isLoading===true && <div className='loader'><img src={Loader}/></div>
         } */}
@@ -173,6 +174,7 @@ function App() {
             <Route exact={true} path="*" element={<NotFound />} />
           </Routes>
           <Footer />
+          </UserProvider>
         </MyContext.Provider>
       </BrowserRouter>
     )

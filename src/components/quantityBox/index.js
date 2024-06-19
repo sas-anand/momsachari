@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from "react";
-
+import { useUser } from "../../context/userContext";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const QuantityBox = (props) => {
   const [inputValue, setinputValue] = useState(1);
   const [cartItems, setcartItems] = useState([]);
+  const { userData, dispatchUserData } = useUser();
 
   useEffect(() => {
     setcartItems(props.cartItems);
     //setinputValue(props.item.quantity)
   }, [props.cartItems]);
 
-  const updateCart = (items) => {
-    props.updateCart(items);
+  // const updateCart = (items) => {
+  //   props.updateCart(items);
+  // };
+
+  const incrementQuantity = () => {
+    console.log("props.item", props.item)
+    console.log("props.cart", props.cartItems)
+    setinputValue(inputValue + 1)
+    dispatchUserData({ type: "INCREMENT_QUANTITY", payload : props.item });
+  };
+
+  const decrementQuantity = (item) => {
+    dispatchUserData({ type: "DECREMENT_QUANTITY", payload : item });
   };
 
   // const plus = () => {
@@ -32,17 +44,20 @@ const QuantityBox = (props) => {
         <input type="number" value={inputValue} />
         <span
           className="arrow plus"
-          onClick={() => {
-            setinputValue(inputValue + 1);
-            const _cart = props.cartItems?.map((cartItem, key) => {
-              return key === parseInt(props.index)
-                ? { ...cartItem, quantity: inputValue + 1 }
-                : { ...cartItem };
-            });
+          onClick={incrementQuantity
+          //   () => {
+          //   // setinputValue(inputValue + 1);
+          //   // const _cart = props.cartItems?.map((cartItem, key) => {
+          //   //   return key === parseInt(props.index)
+          //   //     ? { ...cartItem, quantity: inputValue + 1 }
+          //   //     : { ...cartItem };
+          //   // });
 
-            updateCart(_cart);
-            setcartItems(_cart);
-          }}
+          //   // updateCart(_cart);
+          //   // setcartItems(_cart);
+            
+          // }
+        }
         >
           <KeyboardArrowUpIcon />
         </span>
@@ -50,24 +65,24 @@ const QuantityBox = (props) => {
         <span
           className="arrow minus"
           onClick={() => {
-            if (inputValue !== 1) {
-              setinputValue(inputValue - 1);
-            }
+            // if (inputValue !== 1) {
+            //   setinputValue(inputValue - 1);
+            // }
 
-            const _cart = props.cartItems?.map((cartItem, key) => {
-              return key === parseInt(props.index)
-                ? {
-                    ...cartItem,
-                    quantity:
-                      cartItem.quantity !== 1
-                        ? inputValue - 1
-                        : cartItem.quantity,
-                  }
-                : { ...cartItem };
-            });
+            // const _cart = props.cartItems?.map((cartItem, key) => {
+            //   return key === parseInt(props.index)
+            //     ? {
+            //         ...cartItem,
+            //         quantity:
+            //           cartItem.quantity !== 1
+            //             ? inputValue - 1
+            //             : cartItem.quantity,
+            //       }
+            //     : { ...cartItem };
+            // });
 
-            updateCart(_cart);
-            setcartItems(_cart);
+            // updateCart(_cart);
+            // setcartItems(_cart);
           }}
         >
           <KeyboardArrowDownIcon />
